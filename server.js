@@ -11,7 +11,7 @@ const io = socketIo(server, {
   }
 });
 
-// Almacenar las sesiones y sus gráficos en memoria (puede ser reemplazado por una base de datos)
+
 let sessions = {};
 
 io.on('connection', (socket) => {
