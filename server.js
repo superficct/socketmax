@@ -31,21 +31,16 @@ io.on('connection', (socket) => {
     }
     socket.join(sessionId);  // Unirse a la sala de la sesión
 
-    // Enviar el estado actual de la sesión al cliente que se une
     socket.emit('initialize', { cells: sessions[sessionId].cells });
   });
 
-  // Escuchar los cambios en el gráfico
   socket.on('updateGraph', (data) => {
     const { sessionId, cells } = data;
 
-    // Verificar que la sesión existe
     if (!sessions[sessionId]) return;
 
-    // Guardar los cambios en la sesión actual
     sessions[sessionId].cells = cells;
 
-    // Propagar los cambios a los otros clientes conectados a la misma sesión
     socket.to(sessionId).emit('updateGraph', data);
   });
 
